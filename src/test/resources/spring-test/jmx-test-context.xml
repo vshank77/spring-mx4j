@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+    </bean>
+
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+        <property name="locateExistingServerIfPossible" value="true" />
+    </bean>
+
+    <context:mbean-export server="mbeanServer" />
+
+    <bean id="mx4jHttpAdaptor" class="org.polyglotted.springmxj.Mx4jHttpAdaptor" init-method="init" destroy-method="stop">
+        <property name="port" value="${jmx.http.port:-1}" />
+        <property name="userName" value="${jmx.http.username:jmxuser}" />
+        <property name="password" value="${jmx.http.password:jmxpasswd}" />
+        <property name="passPhrase" value="${jmx.http.passphrase:}" />
+    </bean>
+</beans>

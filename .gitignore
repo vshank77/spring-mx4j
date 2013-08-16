@@ -1,0 +1,16 @@
+# eclipse
+.settings/
+
+# idea
+*.iml
+
+# build
+target/
+tomcat.*/
+test-output/
+
+# package
+*.class
+*.jar
+*.war
+*.ear
